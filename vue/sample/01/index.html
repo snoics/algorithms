@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" content>
+        <title>01</title>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="name" v-on:focus="initName" v-on:blur="setName" placeholder="请输入名称"><button v-on:click="showBooks">{{buttonText}}</button>
+            <h1>书名:{{name}}</h1>
+            <p v-if="show">这里是所有图书的库存,总价格：{{total}}</p>
+            <ul v-if="show">
+                <li v-for="book in books" valign="middle"><a :href='book.url'><img :src='book.img' :alt='book.name'></a></li>
+            </ul>
+        </div>
+        <script src="../../vue.js"></script>
+        <script>
+            var app=new Vue({
+                el:'#app',
+                data:{
+                    a:2,
+                    name:'',
+                    show:true,
+                    buttonText:'隐藏图书',
+                    books:[
+                        {name:'钱锺书选唐诗',
+                            url:'https://www.amazon.cn/dp/B08NWWDXYP/ref=s9_acsd_al_bw_c2_x_2_i?pf_rd_m=A1U5RCOVU0NYF2&pf_rd_s=merchandised-search-4&pf_rd_r=PXMJN51TK1VKMCBJVG1N&pf_rd_t=101&pf_rd_p=a0c5b3c6-f61c-4bc1-8d2f-2d939ff19e57&pf_rd_i=1875254071',
+                            img:'https://images-cn.ssl-images-amazon.cn/images/I/51nB1UrlMcL.jpg',
+                            price:15},
+                        {name:'禅与摩托车维修艺术',
+                            url:'https://www.amazon.cn/dp/B084T9ZYK1/ref=s9_acsd_al_bw_c2_x_3_i?pf_rd_m=A1U5RCOVU0NYF2&pf_rd_s=merchandised-search-5&pf_rd_r=PXMJN51TK1VKMCBJVG1N&pf_rd_t=101&pf_rd_p=53ca1b79-982c-4962-8c37-8ae2665ce37e&pf_rd_i=1875254071',
+                            img:'https://images-cn.ssl-images-amazon.cn/images/I/41X+gVTmCbL.jpg',
+                            price:23},
+                        {name:'中国乡村：19世纪的帝国控制',
+                            url:'https://www.amazon.cn/dp/B08R5WPXZN/ref=s9_acsd_al_bw_c2_x_6_i?pf_rd_m=A1U5RCOVU0NYF2&pf_rd_s=merchandised-search-5&pf_rd_r=PXMJN51TK1VKMCBJVG1N&pf_rd_t=101&pf_rd_p=53ca1b79-982c-4962-8c37-8ae2665ce37e&pf_rd_i=1875254071',
+                            img:'https://images-cn.ssl-images-amazon.cn/images/I/41DJ2BUqiAL.jpg',
+                            price:78}
+                    ]
+                },
+                created:function(){
+                    console.log("app created");
+                },
+                mounted:function(){
+                    console.log("app mounted");
+                },
+                beforeDestory:function(){
+                    console.log("app before destory");
+                },
+                methods:{
+                    initName:function(){
+                        this.name="我是爱看书的人!"
+                        console.log("app name initName");
+                    },
+                    setName:function(){
+                        console.log("app name setName");
+                    },
+                    showBooks:function(){
+                        if(this.show){
+                            this.show=false;
+                            this.buttonText='显示图书';
+                        }else{
+                            this.show=true;
+                            this.buttonText='隐藏图书';
+                        }
+                    }
+                },
+                computed:{
+                    total:function(){
+                        var totalPrice=0;
+                        for(var i=0;i<this.books.length;i++){
+                            totalPrice+=this.books[i].price;
+                        }
+                        return totalPrice;
+                    }
+                }
+            });
+            app.initName();
+            console.log("app initName : "+app.name);
+        </script>
+    </body>
+</html>
